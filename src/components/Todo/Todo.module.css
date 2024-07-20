@@ -1,0 +1,66 @@
+.todo {
+  width: 80%;
+  margin: auto;
+}
+.title {
+  text-align: center;
+  color: #ff9100;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 30px;
+}
+.inputDiv {
+  margin: auto;
+  text-align: center;
+  margin-top: 20px;
+}
+.inputDiv input {
+  width: 92%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background-color: black;
+  outline: none;
+  border: 1px solid#ff9100;
+  color: #ff9100;
+  font-size: 16px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-family: "Times New Roman", Times, serif;
+  height: 40px;
+}
+.inputDiv button {
+  width: 7%;
+  height: 40px;
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  outline: none;
+  border: none;
+  background-color: #ff9100;
+  border: 10px solid #ff9100;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+}
+.titleInput {
+  background-color: #ff9100;
+  border: none;
+  outline: none;
+  color: black;
+}
+
+.addBtn {
+  background-color: black !important;
+}
+.addBtn:hover {
+  background-color: orange !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .inputDiv button {
+    width: 15%;
+  }
+
+  .inputDiv input {
+    width: 85%;
+  }
+}
