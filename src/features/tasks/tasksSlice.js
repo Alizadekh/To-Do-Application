@@ -1,6 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ref, set, get, remove, push } from "firebase/database";
-import { db } from "../../firebase";
 
 const initialState = {
   tasks: [],
@@ -11,28 +9,28 @@ const initialState = {
 export const fetchTasks = createAsyncThunk(
   "tasks/fetchTasks",
   async (userId) => {
-    const tasksRef = ref(db, `tasks/${userId}`);
-    const snapshot = await get(tasksRef);
-    const data = snapshot.val() || {};
-    return Object.keys(data).map((key) => ({ id: key, ...data[key] }));
+    const tasks = JSON.parse(localStorage.getItem(`tasks_${userId}`)) || [];
+    return tasks;
   }
 );
 
 export const addTask = createAsyncThunk(
   "tasks/addTask",
   async ({ userId, task }) => {
-    const tasksRef = ref(db, `tasks/${userId}`);
-    const newTaskRef = push(tasksRef);
-    await set(newTaskRef, task);
-    return { id: newTaskRef.key, ...task };
+    const tasks = JSON.parse(localStorage.getItem(`tasks_${userId}`)) || [];
+    const newTask = { id: new Date().getTime().toString(), ...task };
+    tasks.push(newTask);
+    localStorage.setItem(`tasks_${userId}`, JSON.stringify(tasks));
+    return newTask;
   }
 );
 
 export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
   async ({ userId, taskId }) => {
-    const taskRef = ref(db, `tasks/${userId}/${taskId}`);
-    await remove(taskRef);
+    let tasks = JSON.parse(localStorage.getItem(`tasks_${userId}`)) || [];
+    tasks = tasks.filter((task) => task.id !== taskId);
+    localStorage.setItem(`tasks_${userId}`, JSON.stringify(tasks));
     return taskId;
   }
 );

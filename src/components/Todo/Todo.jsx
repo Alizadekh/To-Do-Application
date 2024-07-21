@@ -7,7 +7,6 @@ import {
 } from "../../features/tasks/tasksSlice";
 import List from "../List/List";
 import style from "./Todo.module.css";
-import { auth } from "../../firebase";
 import { Modal, Box, TextField, Button, Typography } from "@mui/material";
 
 function Todo() {
@@ -17,12 +16,10 @@ function Todo() {
   const [deadline, setDeadline] = useState("");
   const dispatch = useDispatch();
   const { tasks, status } = useSelector((state) => state.tasks);
-  const userId = auth.currentUser?.uid;
+  const userId = "default_user"; // Kullanıcı kimliği yerine varsayılan bir kimlik kullanabilirsiniz
 
   useEffect(() => {
-    if (userId) {
-      dispatch(fetchTasks(userId));
-    }
+    dispatch(fetchTasks(userId));
   }, [dispatch, userId]);
 
   const handleChange = (e) => {
@@ -36,7 +33,7 @@ function Todo() {
   const handleDeadlineChange = (e) => setDeadline(e.target.value);
 
   const handleAdd = () => {
-    if (title.trim() && element.trim() && userId) {
+    if (title.trim() && element.trim()) {
       dispatch(
         addTask({ userId, task: { title, description: element, deadline } })
       );
@@ -48,9 +45,7 @@ function Todo() {
   };
 
   const handleDelete = (taskId) => {
-    if (userId) {
-      dispatch(deleteTask({ userId, taskId }));
-    }
+    dispatch(deleteTask({ userId, taskId }));
   };
 
   return (
